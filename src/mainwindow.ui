@@ -73,13 +73,43 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QListView" name="todoList"/>
+     <widget class="QListView" name="todoList">
+      <property name="acceptDrops">
+       <bool>true</bool>
+      </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="defaultDropAction">
+       <enum>Qt::DropAction::MoveAction</enum>
+      </property>
+     </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QListView" name="wipList"/>
+     <widget class="QListView" name="wipList">
+      <property name="acceptDrops">
+       <bool>true</bool>
+      </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="defaultDropAction">
+       <enum>Qt::DropAction::MoveAction</enum>
+      </property>
+     </widget>
     </item>
     <item row="1" column="2">
-     <widget class="QListView" name="doneList"/>
+     <widget class="QListView" name="doneList">
+      <property name="acceptDrops">
+       <bool>true</bool>
+      </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="defaultDropAction">
+       <enum>Qt::DropAction::MoveAction</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -208,7 +238,7 @@
     <string>&amp;Перейменувати</string>
    </property>
    <property name="shortcut">
-    <string>Return</string>
+    <string>Ctrl+Return</string>
    </property>
   </action>
   <action name="removeAction">
