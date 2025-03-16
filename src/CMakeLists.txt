@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.19)
 project(YaPZT_Module1 LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+find_package(GTest REQUIRED)
+
+# === Програма ===
 
 qt_standard_project_setup()
 
@@ -18,6 +21,27 @@ target_link_libraries(TaskList_Demo
         Qt::Core
         Qt::Widgets
 )
+
+# === Тести ===
+
+enable_testing()
+
+add_executable(TaskList_Tests
+    tst_single_list.cpp
+    tst_save_file.cpp
+)
+
+target_link_libraries(TaskList_Tests
+    PRIVATE
+        Qt::Core
+        Qt::Widgets
+        GTest::GTest
+        GTest::Main
+)
+
+add_test(NAME TaskListTest COMMAND TaskList_Tests)
+
+# === Інсталяція ===
 
 include(GNUInstallDirs)
 
