@@ -32,8 +32,15 @@ private slots:
 
     void on_openAction_triggered();
 
+    void on_quitAction_triggered();
+
+    void on_aboutAction_triggered();
+
+    void on_aboutQtAction_triggered();
+
 private:
     Ui::MainWindow *ui;
+    QString appVersion = "1.0.0";
 
     QString saveFile;
 };
