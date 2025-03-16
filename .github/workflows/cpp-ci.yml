@@ -16,11 +16,16 @@ jobs:
     steps:
       - name: Отримання репозиторія
         uses: actions/checkout@v4
+
+      - name: Встановлення Qt (новіша версія)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.2'
       
       - name: Встановлення залежностей
         run: |
           sudo apt update
-          sudo apt install -y qt6-base-dev libgtest-dev cppcheck
+          sudo apt install -y libgtest-dev cppcheck
 
       - name: Збірка проєкту
         run: |
@@ -72,9 +77,14 @@ jobs:
       - name: Отримання репозиторія
         uses: actions/checkout@v4
 
+      - name: Встановлення Qt (новіша версія)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.2'
+
       - name: Встановлення залежностей
         run: |
-          choco install -y ninja qt6-base-dev --no-progress
+          choco install -y ninja --no-progress
 
       - name: Збірка проєкту
         run: |
