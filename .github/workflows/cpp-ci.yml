@@ -1,0 +1,91 @@
+name: Статичний аналіз та збірка
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build-test-analyze-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Отримання репозиторія
+        uses: actions/checkout@v4
+      
+      - name: Встановлення залежностей
+        run: |
+          sudo apt update
+          sudo apt install -y qt6-base-dev libgtest-dev cppcheck
+
+      - name: Збірка проєкту
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --parallel
+
+      - name: Запуск тестів
+        run: |
+          cd build
+          ctest --output-on-failure | tee ../test-results.txt
+        continue-on-error: true
+
+      - name: Аналіз коду через Cppcheck
+        run: |
+          cppcheck --enable=all --template=gcc . | tee cppcheck-report.txt
+        continue-on-error: true
+
+      - name: Аналіз коду через SonarQube
+        run: |
+          export SONAR_SCANNER_OPTS="-Xmx2048m"
+          sonar-scanner \
+            -Dsonar.projectKey=MyProject \
+            -Dsonar.organization=MyOrg \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} | tee sonar-report.log
+
+      - name: Аналіз коду через Codacy
+        run: |
+          bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
+            --project-token=${{ secrets.CODACY_PROJECT_TOKEN }} \
+            --force-coverage-parser gcov | tee codacy-report.json
+
+      - name: Збереження всіх артефактів
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-artifacts
+          path: |
+            build/TaskList_Demo
+            test-results.txt
+            cppcheck-report.xml
+            sonar-report.log
+            codacy-report.json
+
+  build-test-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Отримання репозиторія
+        uses: actions/checkout@v4
+
+      - name: Встановлення залежностей
+        run: |
+          choco install -y ninja qt6-base-dev --no-progress
+
+      - name: Збірка проєкту
+        run: |
+          cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --parallel
+
+      - name: Запуск тестів
+        shell: bash
+        run: |
+          cd build
+          ctest --output-on-failure | tee ../test-results.txt
+        continue-on-error: true
+
+      - name: Збереження всіх артефактів
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifacts
+          path: |
+            build/TaskList_Demo.exe
+            test-results.txt
