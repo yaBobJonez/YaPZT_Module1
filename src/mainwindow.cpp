@@ -96,3 +96,35 @@ void MainWindow::on_openAction_triggered()
     ui->doneList->setModel(new QStringListModel( is.readLine().split(",", Qt::SkipEmptyParts) ));
 }
 
+
+void MainWindow::on_quitAction_triggered()
+{
+    QMessageBox::StandardButton res = QMessageBox::question(
+        this, "Вихід з програми",
+        "Чи хочете Ви зберегти дошку перед виходом?",
+        QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
+        QMessageBox::Save
+        );
+    if (res == QMessageBox::Cancel) return;
+    if (res == QMessageBox::Save) ui->saveAction->trigger();
+    QApplication::quit();
+}
+
+
+void MainWindow::on_aboutAction_triggered()
+{
+    QMessageBox::about(
+        this, "Про TaskList Demo " + appVersion,
+        "Настільний застосунок управляння завданнями, виконаний\n"
+        "для МКР 1 з дисципліни «Якість ПЗ та тестування».\n\n"
+        "Copyright © 2025 Михайло Стецюк\n"
+        "Надається під MIT License"
+        );
+}
+
+
+void MainWindow::on_aboutQtAction_triggered()
+{
+    QMessageBox::aboutQt(this, "Про Qt Framework");
+}
+
