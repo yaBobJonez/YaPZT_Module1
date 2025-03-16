@@ -1,5 +1,7 @@
 # ЯПЗТ Модуль 1 Стецюк Б-121-22-1-ПІ
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/edeeee01dd0047acb859927c569881b5)](https://app.codacy.com/gh/yaBobJonez/YaPZT_Module1?utm_source=github.com&utm_medium=referral&utm_content=yaBobJonez/YaPZT_Module1&utm_campaign=Badge_Grade)
+
 ## Опис проєкту
 
 Цей репозиторій містить **проєкт №1**: розробка та контроль якості настільного (desktop)
