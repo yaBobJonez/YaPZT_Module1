@@ -1,0 +1,20 @@
+@startuml
+class MainWindow <<Q_OBJECT>> {
+    - QString appVersion
+    - QString saveFile
+    + MainWindow(QWidget *parent = nullptr)
+    + ~MainWindow()
+    + <<slot>> on_addAction_triggered()
+    + <<slot>> on_editAction_triggered()
+    + <<slot>> on_removeAction_triggered()
+    + <<slot>> on_saveAsAction_triggered()
+    + <<slot>> on_saveAction_triggered()
+    + <<slot>> on_closeAction_triggered()
+    + <<slot>> on_openAction_triggered()
+    + <<slot>> on_quitAction_triggered()
+    + <<slot>> on_aboutAction_triggered()
+    + <<slot>> on_aboutQtAction_triggered()
+}
+MainWindow -|> QMainWindow : extends
+QApplication ..> MainWindow : uses
+@enduml
