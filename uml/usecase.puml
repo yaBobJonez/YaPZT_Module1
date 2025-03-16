@@ -1,0 +1,19 @@
+@startuml
+actor "Користувач" as User
+rectangle "Програма" {
+  rectangle "Список завдань" {
+    usecase "Створити задачу" as UC1
+    usecase "Перемістити задачу" as UC2
+    usecase "Змінити текст задачі" as UC3
+    usecase "Видалити задачу" as UC4
+  }
+  usecase "Відкрити файл" as UC5
+  usecase "Зберегти файл" as UC6
+}
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+@enduml
