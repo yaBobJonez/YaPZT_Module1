@@ -37,8 +37,8 @@ jobs:
         run: |
           export SONAR_SCANNER_OPTS="-Xmx2048m"
           sonar-scanner \
-            -Dsonar.projectKey=MyProject \
-            -Dsonar.organization=MyOrg \
+            -Dsonar.projectKey=yabobjonez_yapzt_module1 \
+            -Dsonar.organization=yabobjonez \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} | tee sonar-report.log
