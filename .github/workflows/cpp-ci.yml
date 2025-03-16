@@ -1,9 +1,13 @@
 name: Статичний аналіз та збірка
 
 on:
-  pull_request:
+  push:
     branches:
       - develop
+  pull_request:
+    branches:
+      - main
+      - 'release/**'
 
 jobs:
   build-test-analyze-linux:
