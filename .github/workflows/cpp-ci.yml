@@ -1,6 +1,7 @@
 name: Статичний аналіз та збірка
 
 on:
+  workflow_dispatch
   push:
     branches:
       - develop
