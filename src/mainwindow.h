@@ -24,7 +24,17 @@ private slots:
 
     void on_removeAction_triggered();
 
+    void on_saveAsAction_triggered();
+
+    void on_saveAction_triggered();
+
+    void on_closeAction_triggered();
+
+    void on_openAction_triggered();
+
 private:
     Ui::MainWindow *ui;
+
+    QString saveFile;
 };
 #endif // MAINWINDOW_H

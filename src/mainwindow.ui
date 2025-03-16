@@ -127,6 +127,7 @@
      <string>&amp;Файл</string>
     </property>
     <addaction name="openAction"/>
+    <addaction name="closeAction"/>
     <addaction name="separator"/>
     <addaction name="saveAction"/>
     <addaction name="saveAsAction"/>
@@ -269,6 +270,14 @@
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::AboutQtRole</enum>
+   </property>
+  </action>
+  <action name="closeAction">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::WindowClose"/>
+   </property>
+   <property name="text">
+    <string>За&amp;крити</string>
    </property>
   </action>
  </widget>
