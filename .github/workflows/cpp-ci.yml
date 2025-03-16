@@ -13,6 +13,8 @@ on:
 jobs:
   build-test-analyze-linux:
     runs-on: ubuntu-latest
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
       - name: Отримання репозиторія
         uses: actions/checkout@v4
@@ -27,10 +29,13 @@ jobs:
           sudo apt update
           sudo apt install -y libgtest-dev cppcheck
 
+      - name: Встановлення Build Wrapper (для SonarCloud)
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v4
+
       - name: Збірка проєкту
         run: |
           cmake -B build -S src -DCMAKE_BUILD_TYPE=Release
-          cmake --build build --parallel
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build --parallel
 
       - name: Збереження виконуваного файлу
         uses: actions/upload-artifact@v4
@@ -50,10 +55,13 @@ jobs:
           name: test-results.txt
           path: test-results.txt
 
-      - name: Аналіз коду через SonarQube
-        uses: SonarSource/sonarqube-scan-action@v5
+      - name: Статичний аналіз через SonarQube
+        uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
 
 
   build-test-windows:
@@ -69,7 +77,8 @@ jobs:
 
       - name: Встановлення залежностей
         run: |
-          C:\vcpkg\vcpkg install ninja gtest
+          choco install ninja
+          C:\vcpkg\vcpkg install gtest
 
       - name: Збірка проєкту
         run: |
